@@ -4,6 +4,7 @@ import status from 'http-status';
 import transactionRoutes from './src/routes/TransactionRoutes.js';
 import blockRoutes from './src/routes/BlockRoutes.js';
 import priceRoutes from './src/routes/PriceRoutes.js';
+import apiAuthroizationMiddleware from './src/middlewares/ApiAuthroizationMiddleware.js';
 
 dotenv.config();
 const app = express(); // create express app
@@ -19,9 +20,9 @@ app.get('/', (req, res) => {
   return res.status(status.OK).send('ok');
 });
 
-app.use('/transaction', transactionRoutes);
-app.use('/block', blockRoutes);
-app.use('/price', priceRoutes);
+app.use('/transaction', apiAuthroizationMiddleware, transactionRoutes);
+app.use('/block', apiAuthroizationMiddleware, blockRoutes);
+app.use('/price', apiAuthroizationMiddleware, priceRoutes);
 
 // start express server on port 5000
 app.listen(port, () => {
