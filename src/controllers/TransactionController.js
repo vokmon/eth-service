@@ -3,7 +3,6 @@ import { provider } from './EthProvider.js';
 
 export const TransactionController = {
   getTransaction: async (req, res) => {
-    console.log(req);
     const { transactionHash } = req.body;
     try {
       if (!transactionHash) {
