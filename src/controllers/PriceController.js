@@ -82,13 +82,18 @@ export const PriceController = {
 
   convertFiatToEther: async (req, res) => {
     const { amountInUsd } = req.body;
-    const price = await getEtherPrice();
-    const priceInCentBigInt = Number(price) * 100;
-    const amountInCent = Math.round((Number(amountInUsd) + Number.EPSILON) * 100) / 100 * 100;
-    const convertedEther = amountInCent / priceInCentBigInt;
-    return res.status(status.OK).send({
-      etherValue: convertedEther,
-      etherPrice: String(price),
-    });
+    try {
+      const price = await getEtherPrice();
+      const priceInCentBigInt = Number(price) * 100;
+      const amountInCent = Math.round((Number(amountInUsd) + Number.EPSILON) * 100) / 100 * 100;
+      const convertedEther = amountInCent / priceInCentBigInt;
+      return res.status(status.OK).send({
+        etherValue: convertedEther,
+        etherPrice: String(price),
+      });
+    } catch (e) {
+      console.error(e);
+      return res.status(status.INTERNAL_SERVER_ERROR).send(`An error occur while getting eth price, ${e.message}`);
+    }
   }
 };
