@@ -69,7 +69,7 @@ export const TransactionController = {
   },
 
   getTransactionHashByQrCode: async (req, res, next) => {
-    console.log('Receive qr code', req);
+    console.log('Receive qr code', req.qrCode);
     req.body = {
       transactionHash: req.qrCode,
     };
