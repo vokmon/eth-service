@@ -39,7 +39,9 @@ export const PriceController = {
   getEtherPrice: async (_req, res) => {
     try {
       const price = await getEtherPrice();
-      return res.status(status.OK).send(String(price));
+      return res.status(status.OK).send({
+        priceInUsd: price,
+      });
     } catch (e) {
       console.error(e);
       return res.status(status.INTERNAL_SERVER_ERROR).send(`An error occur while getting eth price, ${e.message}`);
