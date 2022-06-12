@@ -9,7 +9,7 @@ let cachedPrice = 0;
 const getEtherPrice = async () => {
   try {
     const currentDate = new Date();
-    if (lastGetPrice === null || (currentDate - lastGetPrice) > 1000 * 60 * 1) {
+    if (lastGetPrice === null || (currentDate - lastGetPrice) > 1000 * 60 * 5) {
       const price = await provider.getEtherPrice();
       console.log(`Ether price in USD: ${price}`);
       cachedPrice = price;
